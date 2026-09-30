@@ -1,21 +1,16 @@
 fn main() {
-    let x = rand::random_range(1..=1000);
-    
-    println!("{}", x);
+    let mut stack = vec![]; //vector 
 
-    for i in 1..=1000 {
-        println!("{} {}", i , check(i, x));
+    stack.push(10);
+    stack.push(11);
+    stack.push(12);
+    stack.push(13);
 
-        if check(i, x) == 0 {
-        println!("we found it! {}", i); 
-        }
+    while !stack.is_empty(){
+        let x = stack.pop().unwrap();
+        print!("{} ", x); 
     }
-    
+    println!(""); 
 
-}
 
-fn check (guess: i32, secret: i32) -> i32 {
-    if guess == secret { 0 }
-    else if guess > secret { 1 }
-    else { -1 }
 }
