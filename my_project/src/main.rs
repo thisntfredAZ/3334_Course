@@ -20,9 +20,6 @@ fn main() -> std::io::Result<()> {
 
     let mut cands: BTreeSet<u64> = BTreeSet::new();
 
-    // Always include a dense sweep of small page sizes.
-    // Sizes below ~min_r/256 are never optimal (each program would
-    // need >256 pages), so bound the sweep from below too.
     let lo = (min_r / 256).max(1);
     let mut p = lo;
     while p <= 4096 && p <= max_r {
@@ -30,9 +27,6 @@ fn main() -> std::io::Result<()> {
         p += 1;
     }
 
-    // Breakpoints from each request, but only those we can reach fast.
-    // For each r, iterate k while ceil(r/k) exceeds the dense grid
-    // (below that, the grid already covers every candidate).
     for day in &days {
         for &r in day {
             if r == 0 { continue; }
@@ -43,8 +37,6 @@ fn main() -> std::io::Result<()> {
                 cands.insert(p);
                 // jump to next distinct value
                 k = r / p + 1;
-                // safety: if p is huge and k is tiny, this still terminates
-                // because k strictly increases each iteration
             }
         }
     }
